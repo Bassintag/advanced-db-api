@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  api:
+    restart: unless-stopped
+    build:
+      context: ../
+      dockerfile: .build/Dockerfile
+    container_name: api
+    ports:
+      - 1234:3000
+    environment:
+      - DB_USERNAME=neo4j
+      - DB_PASSWORD=aledoskour
+      - DB_CONNECTION_STRING=bolt://db
+    volumes:
+      - '.:/app'
+    depends_on:
+      - db
+  db:
+    restart: always
+    image: neo4j
+    container_name: db
+    ports:
+      - 7474:7474
+      - 7687:7687
+    environment:
+      - NEO4J_AUTH=neo4j/aledoskour
+      - NEO4J_PASSWORD=aledoskour

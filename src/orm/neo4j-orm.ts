@@ -1,6 +1,6 @@
-import {IOrm} from "./orm";
-import {inject, injectable} from "inversify";
-import {IDENTIFIERS} from "../constants/identifiers";
+import {IOrm} from './orm';
+import {inject, injectable} from 'inversify';
+import {IDENTIFIERS} from '../constants/identifiers';
 import {Connection} from 'cypher-query-builder';
 
 @injectable()
@@ -16,17 +16,10 @@ export class Neo4jOrm implements IOrm {
         @inject(IDENTIFIERS.DB_PASSWORD)
         private readonly dbPassword: string,
     ) {
+        console.log(`USERNAME: ${dbUsername}`);
         this.connection = new Connection(dbConnectionString, {
             username: dbUsername,
             password: dbPassword
-        }, {
-            driverConfig: {
-                logging: {
-                    level: "debug", logger(level, message) {
-                        console.log(`[neo4J][${level}] ${message}`);
-                    }
-                }
-            }
         });
     }
 

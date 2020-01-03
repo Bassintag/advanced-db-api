@@ -12,23 +12,26 @@ import './controllers/provider-controller';
 import './controllers/course-controller';
 import './controllers/registration-controller';
 
-container.get<IServer>(IDENTIFIERS.SERVER).start();
+setTimeout(() => {
 
-const server = new InversifyExpressServer(container);
+    container.get<IServer>(IDENTIFIERS.SERVER).start();
 
-server.setConfig((a) => {
-    a.use(bodyParser.json());
-    a.use(cors());
-}).setErrorConfig((a) => {
-    // @ts-ignore
-    a.use((err, req, res, next) => {
-        console.log(err.stack);
-        res.status(500).json({
-            error: err.message,
+    const server = new InversifyExpressServer(container);
+
+    server.setConfig((a) => {
+        a.use(bodyParser.json());
+        a.use(cors());
+    }).setErrorConfig((a) => {
+        // @ts-ignore
+        a.use((err, req, res, next) => {
+            console.log(err.stack);
+            res.status(500).json({
+                error: err.message,
+            });
         });
     });
-});
 
-const app = server.build();
+    const app = server.build();
 
-app.listen(Number.parseInt(process.env['PORT'] || '3000', 10));
+    app.listen(Number.parseInt(process.env['PORT'] || '3000', 10));
+}, 10000);
