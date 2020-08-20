@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "@types/bcrypt": "^3.0.0",
-    "bcrypt": "^3.0.7",
+    "bcrypt": "^5.0.0",
     "body-parser": "latest",
     "cors": "^2.8.5",
     "cypher-query-builder": "^5.0.4",
